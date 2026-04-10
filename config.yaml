@@ -1,4 +1,6 @@
 baseURL: "/"
+relativeURLs: true
+canonifyURLs: true
 languageCode: "en-us"
 title: "Sneh Bera"
 theme: ["PaperMod"]
