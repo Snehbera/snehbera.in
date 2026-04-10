@@ -1,11 +1,13 @@
 baseURL: "/"
-relativeURLs: true
-canonifyURLs: true
 languageCode: "en-us"
 title: "Sneh Bera"
-theme: ["PaperMod"]
+
+theme: "PaperMod"
+
 enableRobotsTXT: true
 enableEmoji: true
+
+relativeURLs: true
 canonifyURLs: true
 
 # -----------------------------
