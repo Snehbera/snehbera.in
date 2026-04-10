@@ -78,7 +78,7 @@ Inside the VPC, the request is directed to a Public Subnet, a dedicated network 
 
 Once cleared by the firewall, the request reaches our EC2 Ubuntu Server. Here, the Apache Web Server takes over, parsing the incoming request and reading the corresponding static web assets (HTML, CSS, JS) from the local file system. Finally, Apache constructs an HTTP 200 OK response and sends the requested webpage back through the same network path to be rendered on the user's screen.
 
-```Markdown
+```markdown
 User Browser
      ↓
 Internet
