@@ -1,0 +1,1103 @@
+/* =============================================================================
+   custom.css — Hugo Portfolio
+   Structure:
+   1.  CSS Variables (Root & Dark Theme)
+   2.  Base / Reset
+   3.  Typography
+   4.  Smooth Theme Transitions
+   5.  Header & Navigation
+   6.  Hamburger Menu (Desktop)
+   7.  Mobile Layout  (@media ≤768px)
+   8.  Hero Section
+   9.  Hero: Avatar
+   10. Hero: Title & Name Gradient
+   11. Hero: Role Chips
+   12. Hero: Description & Buttons
+   13. Hero: Divider & Socials
+   14. Hero: Responsive (@media ≤768px / ≤580px)
+   15. Lightbox (FLIP)
+   16. Theme Toggle Icons
+   17. Keyframe Animations
+   18. Custom Table Style
+   19. Code Snippet Style
+============================================================================= */
+
+/* =============================================================================
+   1. CSS VARIABLES — Root & Dark Theme
+============================================================================= */
+
+:root {
+  --bg: #f5f4f1;
+  --surface: #ffffff;
+  --border: rgba(0, 0, 0, 0.09);
+  --text: #18181b;
+  --text-muted: #71717a;
+  --accent: #2563eb;
+  --accent-soft: rgba(37, 99, 235, 0.07);
+  --radius: 0.75rem;
+  --header-height: 60px;
+}
+
+:root[data-theme="dark"],
+[data-theme="dark"] {
+  --theme: #090a0c;
+  --entry: #1a1a1f;
+  --code-bg: rgb(28, 29, 33);
+  --bg: #101010;
+  --surface: #1a1a1f;
+  --border: rgba(255, 255, 255, 0.09);
+  --text: #f0ede8;
+  --text-muted: #c4c4c5;
+  --accent: #60a5fa;
+  --accent-soft: rgba(96, 165, 250, 0.09);
+  --code-block-bg: rgb(28, 29, 33);
+}
+
+/* =============================================================================
+   2. BASE / RESET
+============================================================================= */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+  overflow-x: clip;
+}
+
+/* =============================================================================
+   3. TYPOGRAPHY
+============================================================================= */
+
+body {
+  font-family: "Atkinson Hyperlegible Next", sans-serif;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  line-height: 1.2;
+  font-weight: 500;
+}
+
+.post-content p {
+  letter-spacing: 0.015em;
+  margin-bottom: 0.7em;
+}
+
+.post-content .highlight:not(table) {
+  margin-bottom: 1.4rem;
+}
+
+.post-content h2:not(.timeline h2) {
+  border-bottom: 1px outset;
+}
+
+html[data-theme="dark"] .post-content code {
+  margin: unset;
+  color: #e6c07b;
+  border-radius: 4px;
+}
+
+strong {
+  font-weight: 600;
+}
+
+.list {
+  background: var(--theme);
+}
+
+.post-entry {
+  background: var(--code-bg);
+}
+
+/* =============================================================================
+   4. SMOOTH THEME TRANSITIONS
+============================================================================= */
+
+/* Disable all transitions while switching theme */
+.theme-switching *,
+.theme-switching *::before,
+.theme-switching *::after {
+  transition: none !important;
+}
+
+/* Disable all transitions when theme switching */
+.disable-theme-transition *,
+.disable-theme-transition *::before,
+.disable-theme-transition *::after {
+  transition: none !important;
+}
+
+/* Prevent flash on initial page load */
+.theme-transition * {
+  transition: none !important;
+}
+
+/* Disable transition for post description */
+.post-description {
+  transition: none !important;
+}
+
+/* =============================================================================
+   5. HEADER & NAVIGATION
+============================================================================= */
+
+.logo a svg {
+  transform: translate(0, 0);
+  margin-inline-end: 0px;
+}
+
+.logo,
+#menu {
+  margin-inline: 0 !important;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.header .nav {
+  width: 100%;
+  max-width: 1064px;
+  padding: 0 var(--gap);
+}
+
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+#menu {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+}
+
+#menu li + li {
+  margin-inline-start: 0;
+}
+
+/* =============================================================================
+   6. HAMBURGER MENU (DESKTOP BASE)
+============================================================================= */
+
+#theme-toggle {
+  background: none;
+  border: none;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+#theme-toggle:hover {
+  transform: scale(1.08);
+}
+#theme-toggle:active {
+  transform: scale(0.92);
+}
+
+#theme-toggle svg {
+  transition: transform 0.25s ease;
+}
+
+.hamburger {
+  display: none;
+  position: relative;
+  width: 25px;
+  height: 25px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.hamburger span {
+  height: 2px;
+  width: 100%;
+  background: var(--primary);
+  border-radius: 2px;
+  transition:
+    transform 0.3s ease,
+    opacity 0.3s ease;
+}
+
+/* Hamburger → X animation */
+.hamburger.active span:nth-child(1) {
+  transform: rotate(45deg) translate(5px, 5px);
+}
+.hamburger.active span:nth-child(2) {
+  opacity: 0;
+}
+.hamburger.active span:nth-child(3) {
+  transform: rotate(-45deg) translate(5px, -5px);
+}
+
+/* Disable scroll when menu is open */
+html.menu-open,
+body.menu-open {
+  overflow: hidden;
+  height: 100%;
+  overscroll-behavior: none;
+}
+
+/* =============================================================================
+   7. MOBILE LAYOUT  (@media ≤768px)
+============================================================================= */
+
+@media (max-width: 768px) {
+  html[data-theme="light"] #menu {
+    background: var(--theme) !important;
+  }
+  html,
+  body {
+    overflow-x: hidden;
+  }
+
+  :root {
+    --header-height: 60px;
+  }
+
+  .logo a svg {
+    transform: translate(0, 0);
+    margin-inline-end: 0px;
+  }
+
+  .logo,
+  #menu {
+    margin-inline: 0 !important;
+  }
+
+  .entry-header h2 {
+    font-size: 1.1rem;
+  }
+
+  .header {
+    z-index: 3000;
+    display: flex;
+    align-items: center;
+  }
+
+  .nav {
+    width: 100%;
+    padding: 0 var(--gap);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  /* Show hamburger on mobile */
+  .hamburger {
+    display: flex;
+    margin-left: auto;
+    z-index: 3100;
+  }
+
+  /* Full-screen drawer below header */
+  #menu {
+    position: fixed;
+    top: var(--header-height);
+    left: 0;
+    right: 0;
+    height: calc(100vh - var(--header-height));
+    width: 100%;
+
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+
+    padding: 30px 28px 40px;
+    overflow-y: auto;
+    list-style: none;
+    margin: 0;
+
+    transform: translateX(100%);
+    will-change: transform;
+    z-index: 2500;
+  }
+
+  #menu.active {
+    transform: translateX(0);
+  }
+
+  /* Drawer backgrounds per theme */
+  html[data-theme="dark"] #menu {
+    background: var(--theme);
+  }
+  html[data-theme="light"] #menu {
+    background: var(--code-bg);
+  }
+
+  /* Menu items — staggered entrance */
+  #menu li {
+    width: 100%;
+    opacity: 0;
+    transform: translateX(20px);
+    transition:
+      opacity 0.3s ease,
+      transform 0.3s ease;
+  }
+
+  #menu li + li {
+    margin-inline-start: 0 !important;
+  }
+
+  #menu.active li {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  #menu.active li:nth-child(1) {
+    transition-delay: 0.05s;
+  }
+  #menu.active li:nth-child(2) {
+    transition-delay: 0.1s;
+  }
+  #menu.active li:nth-child(3) {
+    transition-delay: 0.15s;
+  }
+  #menu.active li:nth-child(4) {
+    transition-delay: 0.2s;
+  }
+  #menu.active li:nth-child(5) {
+    transition-delay: 0.25s;
+  }
+
+  /* Dividers per theme */
+  [data-theme="dark"] #menu li {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  }
+  [data-theme="light"] #menu li {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+  }
+
+  /* Menu links */
+  #menu a {
+    display: block;
+    width: 100%;
+    font-size: 22px;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    padding: 16px 0;
+    color: var(--primary);
+    text-decoration: none;
+    transition:
+      transform 0.25s ease,
+      opacity 0.25s ease;
+  }
+
+  #menu a:hover {
+    transform: translateX(6px);
+    opacity: 0.85;
+  }
+
+  /* Fade main content when menu is open */
+  body.menu-open main {
+    opacity: 0.6;
+    transition: opacity 0.25s ease;
+  }
+
+  /* Theme toggle inside mobile menu */
+  .menu-theme-toggle {
+    width: 100%;
+  }
+
+  .menu-theme-toggle button {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    padding: 16px 0;
+    background: none;
+    border: none;
+    color: var(--primary);
+    font-size: 22px;
+    font-weight: 500;
+    cursor: pointer;
+  }
+
+  .menu-theme-toggle button svg {
+    margin-right: 10px;
+  }
+}
+
+/* =============================================================================
+   8. HERO SECTION
+============================================================================= */
+
+.hero {
+  min-height: calc(100vh - var(--header-height));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem 2rem 5rem;
+
+  position: relative;
+  isolation: isolate;
+
+  /* Full-bleed escape */
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+}
+
+/* Dot-grid background */
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  left: 50%;
+  margin-left: -50vw;
+  width: 100vw;
+
+  background-image: radial-gradient(
+    circle,
+    rgb(82 82 82 / 72%) 1px,
+    #00000000 1px
+  );
+  background-size: 32px 32px;
+  background-position: 0 0;
+  opacity: 0.8;
+
+  animation: dotsDrift 40s linear infinite;
+
+  -webkit-mask-image: radial-gradient(
+    ellipse at center,
+    black 60%,
+    transparent 100%
+  );
+  mask-image: radial-gradient(ellipse at center, black 60%, transparent 100%);
+
+  z-index: -1;
+}
+
+/* Radial glow */
+.hero::after {
+  content: "";
+  position: absolute;
+  top: 30%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 800px;
+  height: 600px;
+
+  background: radial-gradient(ellipse, var(--accent-soft) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: -2;
+}
+
+.hero-inner {
+  position: relative;
+  z-index: 1;
+  max-width: 660px;
+  width: 100%;
+  text-align: center;
+}
+
+/* =============================================================================
+   9. HERO — AVATAR
+============================================================================= */
+
+.avatar-wrap {
+  display: inline-block;
+  margin-bottom: 2rem;
+  /* Added a smooth transition for the whole container to float */
+  transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1); 
+  animation: scaleIn 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+.avatar-ring {
+  padding: 2px; /* Thinned down from 4px for a much sleeker, modern line */
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--accent) 0%, #373b61 50%, #60a5fa 100%);
+  background-size: 200%;
+  animation: gradShift 5s ease infinite;
+  display: inline-block;
+  /* Subtler static shadow that looks good in light and dark mode */
+  box-shadow: 0 0 20px rgba(99, 102, 241, 0.15);
+  transition: box-shadow 0.5s ease;
+}
+
+.avatar-inset {
+  padding: 2px; /* Thinned down to reduce the harsh gap in light mode */
+  border-radius: 50%;
+  background: var(--bg);
+  display: block;
+}
+
+.avatar-img {
+  display: block;
+  width: 250px; 
+  height: 250px; 
+  border-radius: 50%;
+  object-fit: cover;
+  object-position: center 10%; 
+  /* Smoother, slightly slower transition for the inner image */
+  transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+/* --- THE NEW PREMIUM HOVER EFFECTS --- */
+
+/* 1. The whole container floats up slightly */
+.avatar-wrap:hover {
+  transform: translateY(-8px);
+}
+
+/* 2. The gradient ring glow intensifies significantly */
+.avatar-wrap:hover .avatar-ring {
+  box-shadow: 0 15px 35px rgba(99, 102, 241, 0.4);
+}
+
+/* 3. The image zooms in just a tiny bit for a parallax feel (reduced from 1.07 to 1.04 for elegance) */
+.avatar-wrap:hover .avatar-img {
+  transform: scale(1.04);
+}
+
+/* =============================================================================
+   10. HERO — TITLE & NAME GRADIENT
+============================================================================= */
+
+.hero-title {
+  font-family: "Instrument Serif", Georgia, serif;
+  font-size: clamp(2.3rem, 5.5vw, 3.4rem);
+  font-weight: 400;
+  line-height: 1.12;
+  letter-spacing: -0.025em;
+  margin-bottom: 1.1rem;
+  animation: fadeUp 0.45s 0.16s both;
+}
+
+.name-grad {
+  background: linear-gradient(130deg, #2563eb 0%, #6366f1 45%, #60a5fa 100%);
+  background-size: 200%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: gradShift 5s ease infinite;
+}
+
+/* =============================================================================
+   11. HERO — ROLE CHIPS
+============================================================================= */
+
+.roles {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 6px;
+  margin-bottom: 1.5rem;
+  animation: fadeUp 0.45s 0.27s both;
+}
+
+.chip {
+  display: inline-block;
+  font-size: 0.73rem;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 100px;
+  padding: 4px 12px;
+  transition:
+    color 0.18s,
+    border-color 0.18s;
+}
+
+.chip:hover {
+  color: var(--accent);
+  border-color: var(--accent);
+}
+
+/* =============================================================================
+   12. HERO — DESCRIPTION & BUTTONS
+============================================================================= */
+
+.hero-desc {
+  font-size: 0.98rem;
+  line-height: 1.78;
+  color: var(--text-muted);
+  max-width: 500px;
+  margin: 0 auto 2.4rem;
+  animation: fadeUp 0.45s 0.38s both;
+}
+
+/* Button group */
+.hero-btns {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 2.8rem;
+  animation: fadeUp 0.45s 0.49s both;
+}
+
+/* Base button */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 0.68rem 1.4rem;
+  border-radius: var(--radius);
+  font-family: "DM Sans", sans-serif;
+  font-size: 0.875rem;
+  font-weight: 500;
+  text-decoration: none;
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition:
+    transform 0.18s,
+    opacity 0.18s,
+    background 0.18s,
+    border-color 0.18s,
+    box-shadow 0.18s;
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+}
+.btn:active {
+  transform: translateY(0);
+}
+
+/* Solid variant */
+.btn-solid {
+  background: var(--text);
+  color: var(--bg);
+}
+
+.btn-solid:hover {
+  opacity: 0.88;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.18);
+}
+
+/* Ghost variant */
+.btn-ghost {
+  background: var(--surface);
+  color: var(--text);
+  border-color: var(--border);
+}
+
+.btn-ghost:hover {
+  border-color: var(--text-muted);
+}
+
+/* =============================================================================
+   13. HERO — DIVIDER & SOCIALS
+============================================================================= */
+
+.divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 1.5rem;
+  animation: fadeUp 0.45s 0.58s both;
+}
+
+.divider::before,
+.divider::after {
+  content: "";
+  flex: 0 0 52px;
+  height: 1px;
+  background: var(--border);
+}
+
+.divider span {
+  font-size: 0.68rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+/* Socials row */
+.socials {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  animation: fadeUp 0.45s 0.67s both;
+}
+
+.soc {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+  text-decoration: none;
+  transition:
+    color 0.18s,
+    border-color 0.18s,
+    background 0.18s,
+    transform 0.2s;
+}
+
+.soc:hover {
+  color: var(--accent);
+  border-color: var(--accent);
+  transform: translateY(-3px);
+}
+
+.soc svg {
+  width: 16px;
+  height: 16px;
+}
+
+/* =============================================================================
+   14. HERO — RESPONSIVE
+============================================================================= */
+
+@media (max-width: 768px) {
+  .hero {
+    overflow: hidden;
+  }
+
+  .hero::after {
+    top: 40%;
+    width: 500px;
+    height: 600px;
+  }
+  .avatar-img {
+    width: 170px;  /* Forces a larger, perfect size on mobile */
+    height: 170px; 
+  }
+  
+  .avatar-wrap {
+    margin-bottom: 1.5rem; /* Slightly reduces the gap below the image on small screens */
+  }
+}
+
+@media (max-width: 580px) {
+  .hero {
+    padding: 3rem 1.2rem 4rem;
+    overflow: hidden;
+  }
+
+  .hero::after {
+    top: 40%;
+    width: 500px;
+    height: 600px;
+  }
+
+  .hero-title {
+    font-size: 2.1rem;
+  }
+
+  .hero-desc {
+    font-size: 0.92rem;
+  }
+
+  .divider::before,
+  .divider::after {
+    flex: 0 0 30px;
+  }
+}
+
+/* =============================================================================
+   15. LIGHTBOX (FLIP)
+   CSS is structural only — all animation values are controlled by JS.
+   Only the overlay and hint fades are CSS-driven (opacity only, no transform).
+============================================================================= */
+
+#lb {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  pointer-events: none;
+}
+
+#lb.lb-show {
+  display: block;
+  pointer-events: auto;
+}
+
+#lb-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.7);
+  opacity: 0;
+  transition: opacity 0.35s ease;
+  cursor: zoom-out;
+  will-change: opacity;
+}
+
+#lb-overlay.lb-in {
+  opacity: 1;
+}
+
+/*
+  opacity:0 is the safe default — removing style attribute
+  never causes a visible flash; GPU-promoted via will-change.
+  NO transition here — JS owns all animation on this element.
+*/
+#lb-img {
+  position: fixed;
+  object-fit: cover;
+  cursor: zoom-out;
+  opacity: 0;
+  transform-origin: center center;
+  will-change: transform, opacity;
+}
+
+#lb-hint {
+  position: absolute;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: rgba(255, 255, 255, 0.35);
+  font-size: 11px;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  font-family: system-ui, sans-serif;
+  opacity: 0;
+  transition: opacity 0.3s ease 0.45s;
+  pointer-events: none;
+  user-select: none;
+  white-space: nowrap;
+}
+
+#lb-hint.lb-in {
+  opacity: 1;
+}
+
+/* Scroll-test helper */
+.scroll-note {
+  margin-top: 80px;
+  opacity: 0.2;
+  font-size: 12px;
+  font-family: system-ui;
+  letter-spacing: 0.05em;
+}
+
+/* =============================================================================
+   16. THEME TOGGLE ICONS
+============================================================================= */
+
+.theme-toggle {
+  font-size: 28px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.logo-switches {
+  display: flex !important;
+  align-items: center;
+}
+
+/* =============================================================================
+   17. KEYFRAME ANIMATIONS
+============================================================================= */
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.85);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes gradShift {
+  0%,
+  100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+@keyframes dotsDrift {
+  0% {
+    background-position:
+      0 0,
+      0 0;
+  }
+  25% {
+    background-position:
+      15px -10px,
+      -10px 12px;
+  }
+  50% {
+    background-position:
+      -20px 15px,
+      18px -18px;
+  }
+  75% {
+    background-position:
+      10px 20px,
+      -15px -10px;
+  }
+  100% {
+    background-position:
+      0 0,
+      0 0;
+  }
+}
+
+/* =============================================================================
+   18. CUSTOM TABLE STYLE (RESPONSIVE)
+============================================================================= */
+
+/* 1. Base Styles (Applies to both Desktop and Mobile) */
+.post-content table {
+  border-collapse: separate; /* Changed from collapse so border-radius works */
+  border-spacing: 0; /* Removes the default gaps between cells */
+  margin: 1.5rem 0;
+  font-size: 0.95rem;
+  border: 1px solid rgba(120, 120, 120, 0.2);
+  border-radius: 8px; /* Slightly bumped up for a modern look */
+  overflow: hidden; /* Clips the header background to fit the corners */
+}
+
+.post-content table th,
+.post-content table td {
+  padding: 12px 16px;
+  text-align: left;
+}
+
+.post-content table thead th {
+  background: rgba(120, 120, 120, 0.12);
+  font-weight: 600;
+  border-bottom: 1px solid rgba(120, 120, 120, 0.25);
+}
+
+.post-content table tbody td {
+  border-bottom: 1px solid rgba(120, 120, 120, 0.15);
+}
+
+/* NEW: Removes the bottom border from the very last row 
+   so it doesn't double up with the table's main outer border */
+.post-content table tbody tr:last-child td {
+  border-bottom: none !important; /* Forces the browser to listen to this rule */
+}
+
+.post-content table tbody tr:nth-child(even) {
+  background: rgba(120, 120, 120, 0.06);
+}
+
+.post-content table th,
+.post-content
+  table:not(.highlighttable, .highlight table, .gist .highlight)
+  td {
+  padding: 12px 16px;
+}
+
+/* 2. Desktop Layout (Shrink-wrapped, native table) */
+@media (min-width: 769px) {
+  .post-content table {
+    display: table;
+    width: max-content; /* Wraps tightly to the content */
+    max-width: 100%; /* Prevents breaking out of the container */
+  }
+}
+
+/* 3. Mobile Layout (Full width, horizontal scroll) */
+@media (max-width: 768px) {
+  .post-content table {
+    display: block; /* Forces block behavior for scrolling */
+    width: 100%; /* Takes up the full phone screen */
+    overflow-x: auto; /* Triggers the scrollbar */
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* Force content to stay on one line to trigger the scrollbar */
+  .post-content table th,
+  .post-content table td {
+    white-space: nowrap;
+  }
+
+  /* Fix PaperMod's broken table column alignment */
+  .post-content table thead {
+    display: table-header-group !important;
+  }
+  .post-content table tbody {
+    display: table-row-group !important;
+  }
+  .post-content table tr {
+    display: table-row !important;
+  }
+}
+
+/* =============================================================================
+   19. CODE SNIPPET STYLE
+============================================================================= */
+
+/* Code block container */
+.highlight {
+  margin: 1.8rem 0;
+  border-radius: 5px;
+  overflow: hidden;
+  /* background: var(--code-bg) !important; */
+  border: 2px solid rgba(255, 255, 255, 0.08);
+}
+
+/* Smooth scroll */
+.highlight pre::-webkit-scrollbar {
+  height: 6px;
+}
+
+.highlight pre::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 10px;
+}
+
+.highlight pre.chroma code {
+  padding: 10px;
+}
+
+/* Ensure the button centers the SVG icon perfectly */
+.copy-code {
+  top: 4px;
+  right: 4px;
+  color: rgba(255, 255, 255, 0.42);
+  background: #3f3f3f;
+  border-radius: 6px;
+  padding: 5px;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Make sure the SVG inherits the text color */
+.copy-code svg {
+  display: block;
+  color: inherit;
+}

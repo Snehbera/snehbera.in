@@ -1,0 +1,31 @@
+<!-- Humburger bar button -->
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const hamburger = document.querySelector(".hamburger");
+    const menu = document.querySelector("#menu");
+
+    if (!hamburger || !menu) {
+      console.warn("Hamburger or menu not found");
+      return;
+    }
+
+    hamburger.addEventListener("click", function () {
+      hamburger.classList.toggle("active");
+      menu.classList.toggle("active");
+      document.body.classList.toggle("menu-open");
+      document.documentElement.classList.toggle("menu-open");
+    });
+  });
+</script>
+
+<!-- Image Lightbox Zoom in and out  -->
+<script src="https://cdn.jsdelivr.net/npm/medium-zoom@1.0.8/dist/medium-zoom.min.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    // Explicitly looks for the .zoomable class
+    mediumZoom('.zoomable', { 
+      margin: 24, 
+      background: 'rgba(0,0,0,.75)' 
+    });
+  });
+</script>

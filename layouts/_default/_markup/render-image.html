@@ -1,0 +1,30 @@
+{{- $u := urls.Parse .Destination -}}
+{{- $src := $u.Path -}}
+
+{{- if not $u.IsAbs -}}
+  {{- $path := strings.TrimPrefix "./" $u.Path }}
+  {{- with or (.PageInner.Resources.Get $path) (resources.Get $path) -}}
+    {{- $src = .RelPermalink -}}
+  {{- end -}}
+{{- end -}}
+
+{{- $width := "" }}
+{{- with $u.Query.Get "w" }}
+  {{- $width = . }}
+{{- end }}
+
+<figure class="post-image">
+  <img
+    src="{{ $src }}"
+    alt="{{ .Text }}"
+    title="{{ .Title }}"
+    loading="lazy"
+    decoding="async"
+    class="zoomable"
+    {{ with $width }}width="{{ . }}"{{ end }}
+  >
+
+  {{ with .Title }}
+  <figcaption>{{ . }}</figcaption>
+  {{ end }}
+</figure>

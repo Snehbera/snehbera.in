@@ -1,0 +1,112 @@
+baseURL: "https://snehbera.in/"
+languageCode: "en-us"
+title: "Sneh Bera"
+theme: ["PaperMod"]
+enableRobotsTXT: true
+enableEmoji: true
+canonifyURLs: true
+
+# -----------------------------
+# MARKUP CONFIG
+# -----------------------------
+markup:
+  highlight:
+    style: github-dark
+    codeFences: true
+    guessSyntax: true
+    lineNos: false
+    lineNumbersInTable: false
+    noClasses: false
+  
+  goldmark:
+    renderer:
+      unsafe: true
+      
+# -----------------------------
+# OUTPUTS
+# -----------------------------
+outputs:
+  home:
+    - HTML
+    - RSS
+    - JSON
+
+# -----------------------------
+# TAXONOMY
+# -----------------------------
+taxonomies:
+  category: categories
+  tag: tags
+
+# -----------------------------
+# SITEMAP
+# -----------------------------
+sitemap:
+  changefreq: weekly
+  priority: 0.5
+  filename: sitemap.xml
+
+# -----------------------------
+# PARAMS (PaperMod)
+# -----------------------------
+params:
+
+  assets:
+    favicon: "/favicon.ico"
+    favicon16x16: "/favicon-16x16.png"
+    favicon32x32: "/favicon-32x32.png"
+    apple_touch_icon: "/apple-touch-icon.png"
+    safari_pinned_tab: ""
+   
+
+  # ===== Site Meta =====
+  env: production
+  description: "Backend Engineering • DevOps • Security Research"
+  author: "Sneh Bera"
+  keywords:
+    ["Backend", "DevOps", "Security", "Hugo", "JavaScript", "Algorithms"]
+
+  # ===== Default Theme =====
+  defaultTheme: dark
+  disableThemeToggle: false
+
+  ShowReadingTime: true
+  ShowShareButtons: true
+  ShowPostNavLinks: true
+  ShowBreadCrumbs: true
+  ShowCodeCopyButtons: true
+  ShowWordCount: true
+  ShowRssButtonInSectionTermList: true
+  ShowToc: true
+  TocOpen: false
+
+  # ===== Home Page Mode (This must required for custom HERO section) =====
+  homeInfoParams:
+    Title: "Hi, I'm Sneh Bera"
+    
+  # ===== Fuse.js Search Config =====
+  fuseOpts:
+    isCaseSensitive: false
+    shouldSort: true
+    threshold: 0.4
+    keys: ["title", "permalink", "summary", "content"]
+
+# -----------------------------
+# MENU
+# -----------------------------
+menu:
+  main:
+    - identifier: blog
+      name: Blogs
+      url: /blogs/
+      weight: 1
+
+    - identifier: archive
+      name: Archive
+      url: /archives/
+      weight: 3
+
+    - identifier: search
+      name: Search
+      url: /search/
+      weight: 5

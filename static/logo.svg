@@ -1,0 +1,10 @@
+<svg viewBox="0 0 100 40" height="30" xmlns="http://www.w3.org/2000/svg">
+  <style>
+
+    .sb-text { fill: #232323; }
+
+    [data-theme="dark"] .sb-text { fill: #D9D9DA; }
+  </style>
+  <text x="0" y="32" class="sb-text" font-family="Inter, Segoe UI, Arial, sans-serif" font-weight="800" font-size="42px" letter-spacing="-1">SB</text>
+  <text x="60" y="32" fill="#5d8aff" font-family="Inter, Segoe UI, Arial, sans-serif" font-weight="800" font-size="42px" font-style="italic">//</text>
+</svg>

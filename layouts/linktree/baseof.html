@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  {{ partial "head.html" . }}
+
+
+
+  {{ $linktreeCSS := resources.Get "css/linktree.css" | minify | fingerprint }}
+  <link rel="stylesheet" href="{{ $linktreeCSS.RelPermalink }}">
+</head>
+<body>
+
+  {{ block "main" . }}{{ end }}
+
+</body>
+</html>

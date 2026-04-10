@@ -1,0 +1,129 @@
+<header class="header">
+    <nav class="nav">
+
+        {{/* ================================================
+             LOGO + LANGUAGE SWITCHER
+        ================================================ */}}
+        <div class="logo">
+
+            {{/* ── SVG Logo ── */}}
+            <a href="{{ "" | absLangURL }}" accesskey="h" aria-label="Home">
+                <svg viewBox="0 0 110 40" height="30" xmlns="http://www.w3.org/2000/svg">
+                    <style>
+                        /* Light mode */
+                        .sb-text { fill: #232323; }
+                        /* Dark mode */
+                        [data-theme="dark"] .sb-text { fill: #D9D9DA; }
+                    </style>
+                    <text x="0"  y="32" class="sb-text" font-family="Inter, Segoe UI, Arial, sans-serif" font-weight="800" font-size="42px" letter-spacing="-1">SB</text>
+                    <text x="60" y="32" fill="#5d8aff"   font-family="Inter, Segoe UI, Arial, sans-serif" font-weight="800" font-size="42px" font-style="italic">//</text>
+                </svg>
+            </a>
+
+            {{/* ── Language Switcher ── */}}
+            <div class="logo-switches">
+                {{- if (not site.Params.disableLangToggle) }}
+                    {{- $lang      := .Lang }}
+                    {{- $separator := not site.Params.disableThemeToggle }}
+                    {{- with site.Home.Translations }}
+                        <ul class="lang-switch">
+                            {{- if $separator }}<li>|</li>{{ end }}
+                            {{- range . -}}
+                                {{- if ne $lang .Lang }}
+                                    <li>
+                                        <a href="{{- .Permalink -}}"
+                                           title="{{ .Language.Params.languageAltTitle | default (.Language.LanguageName | emojify) | default (.Lang | title) }}"
+                                           aria-label="{{ .Language.LanguageName | default (.Lang | title) }}">
+                                            {{- if (and site.Params.displayFullLangName (.Language.LanguageName)) }}
+                                                {{- .Language.LanguageName | emojify -}}
+                                            {{- else }}
+                                                {{- .Lang | title -}}
+                                            {{- end -}}
+                                        </a>
+                                    </li>
+                                {{- end -}}
+                            {{- end }}
+                        </ul>
+                    {{- end }}
+                {{- end }}
+            </div>
+
+        </div>{{/* ── END .logo ── */}}
+
+        {{/* ================================================
+             NAV RIGHT: Menu + Theme Toggle + Hamburger
+        ================================================ */}}
+        {{- $currentPage := . }}
+
+        <div class="nav-right">
+
+            {{/* ── Main Menu ── */}}
+            <ul id="menu">
+                {{- range site.Menus.main }}
+                    {{- $menu_item_url := (cond (strings.HasSuffix .URL "/") .URL (printf "%s/" .URL)) | absLangURL }}
+                    {{- $page_url      := $currentPage.Permalink | absLangURL }}
+                    {{- $is_search     := eq .Identifier "search" }}
+
+                    <li>
+                        <a href="{{ .URL | absLangURL }}"
+                           title="{{ .Title | default .Name }} {{- cond $is_search (" (Alt + /)" | safeHTMLAttr) ("" | safeHTMLAttr) }}"
+                           {{- cond $is_search (" accesskey=/" | safeHTMLAttr) ("" | safeHTMLAttr) }}>
+
+                            <span {{- if eq $menu_item_url $page_url }} class="active"{{- end }}>
+                                {{- .Pre }}
+                                {{- .Name -}}
+                                {{ .Post -}}
+                            </span>
+
+                            {{/* External link icon */}}
+                            {{- if (findRE "://" .URL) }}&nbsp;
+                                <svg fill="none" shape-rendering="geometricPrecision"
+                                     stroke="currentColor" stroke-linecap="round"
+                                     stroke-linejoin="round" stroke-width="2.5"
+                                     viewBox="0 0 24 24" height="12" width="12">
+                                    <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"></path>
+                                    <path d="M15 3h6v6"></path>
+                                    <path d="M10 14L21 3"></path>
+                                </svg>
+                            {{- end }}
+
+                        </a>
+                    </li>
+
+                {{- end }}
+            </ul>{{/* ── END #menu ── */}}
+
+            {{/* ── Theme Toggle ── */}}
+            {{- if (not site.Params.disableThemeToggle) }}
+                <button id="theme-toggle"
+                        accesskey="t"
+                        title="(Alt + T)"
+                        aria-label="Toggle theme">
+                    <svg id="moon"
+                         xmlns="http://www.w3.org/2000/svg"
+                         viewBox="0 0 24 24"
+                         width="18" height="18"
+                         fill="currentColor">
+                        <circle cx="12" cy="12" r="10" />
+                    </svg>
+                    <svg id="sun"
+                         xmlns="http://www.w3.org/2000/svg"
+                         viewBox="0 0 24 24"
+                         width="18" height="18"
+                         fill="currentColor">
+                        <circle cx="12" cy="12" r="10" />
+                    </svg>
+                </button>
+            {{- end }}
+
+            {{/* ── Hamburger (Mobile) ── */}}
+            <button class="hamburger" id="hamburger" aria-label="Toggle Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+
+        </div>{{/* ── END .nav-right ── */}}
+
+    </nav>
+</header>
