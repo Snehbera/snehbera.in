@@ -25,6 +25,32 @@
 /* =============================================================================
    1. CSS VARIABLES — Root & Dark Theme
 ============================================================================= */
+@font-face {
+    font-family: 'Atkinson Hyperlegible Next';
+    /* Added /fonts/ prefix */
+    src: url('/fonts/AtkinsonHyperlegibleNext-Medium.woff2') format('woff2');
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Atkinson Hyperlegible Next';
+    /* Added /fonts/ prefix */
+    src: url('/fonts/AtkinsonHyperlegibleNext-Regular.woff2') format('woff2');
+    font-weight: 400; /* Use 400 instead of 'normal' for better clarity */
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Atkinson Hyperlegible Next';
+    /* Added /fonts/ prefix */
+    src: url('/fonts/AtkinsonHyperlegibleNext-SemiBold.woff2') format('woff2');
+    font-weight: 600;
+    font-style: normal;
+    font-display: swap;
+}
 
 :root {
   --bg: #f5f4f1;
@@ -576,7 +602,7 @@ body.menu-open {
 ============================================================================= */
 
 .hero-title {
-  font-family: "Instrument Serif", Georgia, serif;
+  font-family: "serif";
   font-size: clamp(2.3rem, 5.5vw, 3.4rem);
   font-weight: 400;
   line-height: 1.12;
@@ -658,7 +684,6 @@ body.menu-open {
   gap: 7px;
   padding: 0.68rem 1.4rem;
   border-radius: var(--radius);
-  font-family: "DM Sans", sans-serif;
   font-size: 0.875rem;
   font-weight: 500;
   text-decoration: none;
