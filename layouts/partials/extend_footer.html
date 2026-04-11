@@ -19,6 +19,7 @@
 </script>
 
 <!-- Image Lightbox Zoom in and out  -->
+{{ if .IsPage }}
 <script src="https://cdn.jsdelivr.net/npm/medium-zoom@1.0.8/dist/medium-zoom.min.js"></script>
 <script>
   document.addEventListener('DOMContentLoaded', function() {
@@ -29,3 +30,4 @@
     });
   });
 </script>
+{{ end }}
